@@ -6,7 +6,7 @@
 /*   By: nle-biha <nle-biha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 22:58:32 by nle-biha          #+#    #+#             */
-/*   Updated: 2021/01/15 22:56:12 by nle-biha         ###   ########.fr       */
+/*   Updated: 2021/01/15 23:09:45 by nle-biha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,12 @@ int		get_next_line(int fd, char **line)
 	{
 		temp = ft_substr(buf, 0, pos_new_line(buf));
 		*line = ft_strjoin(*line, temp);
-		temp = ft_substr(buf, pos_new_line(buf) + 1, err);
-		ft_strlcpy(save, temp, err);
+		temp = ft_substr(buf, pos_new_line(buf) + 1, BUFFER_SIZE);
+		ft_strlcpy(save, temp, BUFFER_SIZE);
 		free(temp);
-		if ((int)pos_new_line(buf) < err)
+		if (pos_new_line(buf) < BUFFER_SIZE)
 			return (1);
+		ft_bzero(buf, BUFFER_SIZE + 1);
 	}
 	if (err == 0)
 	{

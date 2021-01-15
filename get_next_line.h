@@ -6,14 +6,14 @@
 /*   By: nle-biha <nle-biha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 22:51:04 by nle-biha          #+#    #+#             */
-/*   Updated: 2021/01/15 20:31:23 by nle-biha         ###   ########.fr       */
+/*   Updated: 2021/01/15 22:05:31 by nle-biha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1000
+#  define BUFFER_SIZE 64
 # endif
 # include <stdio.h>
 # include <unistd.h>

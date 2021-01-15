@@ -6,7 +6,7 @@
 /*   By: nle-biha <nle-biha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 22:58:32 by nle-biha          #+#    #+#             */
-/*   Updated: 2021/01/15 22:17:27 by nle-biha         ###   ########.fr       */
+/*   Updated: 2021/01/15 22:49:38 by nle-biha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,10 @@ int		get_next_line(int fd, char **line)
 	{
 		temp = ft_substr(buf, 0, pos_new_line(buf));
 		*line = ft_strjoin(*line, temp);
-		temp = ft_substr(buf, pos_new_line(buf) + 1, BUFFER_SIZE);
-		ft_strlcpy(save, temp, BUFFER_SIZE);
+		temp = ft_substr(buf, pos_new_line(buf) + 1, err);
+		ft_strlcpy(save, temp, err);
 		free(temp);
-		if (err < BUFFER_SIZE)
-			ft_bzero(save, BUFFER_SIZE + 1);
-		if (pos_new_line(buf) < BUFFER_SIZE)
+		if ((int)pos_new_line(buf) < err)
 			return (1);
 	}
 	if (err == 0)
@@ -73,3 +71,21 @@ int		get_next_line(int fd, char **line)
 	}
 	return (-1);
 }
+
+ int main(int argc, char **argv)
+ {
+     char **line;
+     int max = 45;
+     line = malloc(sizeof(char*) * max);
+     (void)argc;
+         //printf("%s\n", temp);
+     int i = 0;
+     int fd = open(argv[1], O_RDONLY);
+     while (i < max)
+     {
+         printf("%d\n",get_next_line(fd, &line[i]));
+         printf("%s", line[i]);
+         i++;
+     }
+     return (1);
+ }

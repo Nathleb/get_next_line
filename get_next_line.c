@@ -6,7 +6,7 @@
 /*   By: nle-biha <nle-biha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 22:58:32 by nle-biha          #+#    #+#             */
-/*   Updated: 2021/01/16 21:17:37 by nle-biha         ###   ########.fr       */
+/*   Updated: 2021/01/17 00:50:14 by nle-biha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,9 @@ int		get_next_line(int fd, char **line)
 	static char	save[BUFFER_SIZE + 1];
 	char		buf[BUFFER_SIZE + 1];
 	int			err;
-	
-	if (fd < 0 || BUFFER_SIZE <= 0 || !line || !(*line = ft_calloc(BUFFER_SIZE, sizeof(char))))
+
+	if (fd < 0 || BUFFER_SIZE <= 0 || !line ||
+		!(*line = ft_calloc(BUFFER_SIZE, sizeof(char))))
 		return (-1);
 	ft_bzero(buf, BUFFER_SIZE + 1);
 	if (pos_new_line(save) < ft_strlen(save))
@@ -71,5 +72,6 @@ int		get_next_line(int fd, char **line)
 	ft_bzero(save, BUFFER_SIZE + 1);
 	if (err == 0)
 		return (0);
+	free(*line);
 	return (-1);
 }

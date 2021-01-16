@@ -6,7 +6,7 @@
 /*   By: nle-biha <nle-biha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 22:58:32 by nle-biha          #+#    #+#             */
-/*   Updated: 2021/01/16 20:50:58 by nle-biha         ###   ########.fr       */
+/*   Updated: 2021/01/16 21:17:37 by nle-biha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,21 +46,15 @@ void	fill_next_line(char *source, char **line, char *save)
 	free(temp);
 }
 
-int		exit_gnl()
-{
-	return(-1);
-}
-
 int		get_next_line(int fd, char **line)
 {
 	static char	save[BUFFER_SIZE + 1];
 	char		buf[BUFFER_SIZE + 1];
 	int			err;
 	
-	if (fd < 0 || BUFFER_SIZE < 0 || !line)
+	if (fd < 0 || BUFFER_SIZE <= 0 || !line || !(*line = ft_calloc(BUFFER_SIZE, sizeof(char))))
 		return (-1);
 	ft_bzero(buf, BUFFER_SIZE + 1);
-	*line = ft_calloc(BUFFER_SIZE, sizeof(char));
 	if (pos_new_line(save) < ft_strlen(save))
 	{
 		fill_next_line(save, line, save);
@@ -77,5 +71,5 @@ int		get_next_line(int fd, char **line)
 	ft_bzero(save, BUFFER_SIZE + 1);
 	if (err == 0)
 		return (0);
-	return (exit_gnl());
+	return (-1);
 }

@@ -6,7 +6,7 @@
 /*   By: nle-biha <nle-biha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 22:58:32 by nle-biha          #+#    #+#             */
-/*   Updated: 2021/01/15 23:45:14 by nle-biha         ###   ########.fr       */
+/*   Updated: 2021/01/16 20:35:11 by nle-biha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,40 +35,42 @@ void	ft_bzero(void *s, size_t n)
 	}
 }
 
+void	fill_next_line(char *source, char **line, char *save)
+{
+	char *temp;
+
+	temp = ft_substr(source, 0, pos_new_line(source));
+	*line = ft_strjoin(*line, temp);
+	temp = ft_substr(source, pos_new_line(source) + 1, BUFFER_SIZE);
+	ft_strlcpy(save, temp, BUFFER_SIZE);
+	free(temp);
+}
+
 int		get_next_line(int fd, char **line)
 {
 	static char	save[BUFFER_SIZE + 1];
-	char		*temp;
 	char		buf[BUFFER_SIZE + 1];
 	int			err;
 
+	if (fd < 0 || BUFFER_SIZE < 0 || !line)
+		return (-1);
 	ft_bzero(buf, BUFFER_SIZE + 1);
 	*line = ft_calloc(BUFFER_SIZE, sizeof(char));
 	if (pos_new_line(save) < ft_strlen(save))
 	{
-		temp = ft_substr(save, 0, pos_new_line(save));
-		*line = ft_strjoin(*line, temp);
-		temp = ft_substr(save, pos_new_line(save) + 1, BUFFER_SIZE);
-		ft_strlcpy(save, temp, BUFFER_SIZE);
-		free(temp);
+		fill_next_line(save, line, save);
 		return (1);
 	}
 	ft_strlcpy(*line, save, BUFFER_SIZE);
 	while ((err = read(fd, buf, BUFFER_SIZE)) > 0)
 	{
-		temp = ft_substr(buf, 0, pos_new_line(buf));
-		*line = ft_strjoin(*line, temp);
-		temp = ft_substr(buf, pos_new_line(buf) + 1, BUFFER_SIZE);
-		ft_strlcpy(save, temp, BUFFER_SIZE);
-		free(temp);
-		if (pos_new_line(buf) < BUFFER_SIZE)
+		fill_next_line(buf, line, save);
+		if (pos_new_line(buf) < ft_strlen(buf))
 			return (1);
 		ft_bzero(buf, BUFFER_SIZE + 1);
 	}
+	ft_bzero(save, BUFFER_SIZE + 1);
 	if (err == 0)
-	{
-		ft_bzero(save, BUFFER_SIZE + 1);
 		return (0);
-	}
 	return (-1);
 }

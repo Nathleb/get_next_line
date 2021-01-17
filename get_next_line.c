@@ -6,7 +6,7 @@
 /*   By: nle-biha <nle-biha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 22:58:32 by nle-biha          #+#    #+#             */
-/*   Updated: 2021/01/17 01:02:22 by nle-biha         ###   ########.fr       */
+/*   Updated: 2021/01/17 01:17:51 by nle-biha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,13 @@ void	fill_next_line(char *source, char **line, char *save)
 	free(temp);
 }
 
+int		exit_gnl(char **line)
+{
+	free(*line);
+	*line = NULL;
+	return (-1);
+}
+
 int		get_next_line(int fd, char **line)
 {
 	static char	save[BUFFER_SIZE + 1];
@@ -71,5 +78,5 @@ int		get_next_line(int fd, char **line)
 	}
 	if (err == 0)
 		return (0);
-	return (-1);
+	return (exit_gnl(line));
 }

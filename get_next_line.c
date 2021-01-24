@@ -6,7 +6,7 @@
 /*   By: nle-biha <nle-biha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 22:58:32 by nle-biha          #+#    #+#             */
-/*   Updated: 2021/01/17 01:17:51 by nle-biha         ###   ########.fr       */
+/*   Updated: 2021/01/24 23:25:10 by nle-biha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,22 @@ void	ft_bzero(void *s, size_t n)
 	}
 }
 
-void	fill_next_line(char *source, char **line, char *save)
+int		fill_next_line(char *source, char **line, char *save)
 {
 	char *temp;
 
-	temp = ft_substr(source, 0, pos_new_line(source));
-	*line = ft_strjoin(*line, temp);
-	temp = ft_substr(source, pos_new_line(source) + 1, BUFFER_SIZE);
+	if (!(temp = ft_substr(source, 0, pos_new_line(source))))
+		return (-1);
+	if (!(*line = ft_strjoin(*line, temp)))
+		return (-1);
+	if (!(temp = ft_substr(source, pos_new_line(source) + 1, BUFFER_SIZE)))
+	{
+		free(*line);
+		return(-1);
+	}
 	ft_strlcpy(save, temp, BUFFER_SIZE);
 	free(temp);
+	return (1);
 }
 
 int		exit_gnl(char **line)
@@ -64,10 +71,7 @@ int		get_next_line(int fd, char **line)
 		return (-1);
 	ft_bzero(buf, BUFFER_SIZE + 1);
 	if (pos_new_line(save) < ft_strlen(save))
-	{
-		fill_next_line(save, line, save);
-		return (1);
-	}
+		return (fill_next_line(save, line, save));
 	ft_strlcpy(*line, save, BUFFER_SIZE);
 	while ((err = read(fd, buf, BUFFER_SIZE)) > 0)
 	{

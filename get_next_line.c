@@ -6,7 +6,7 @@
 /*   By: nle-biha <nle-biha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 22:58:32 by nle-biha          #+#    #+#             */
-/*   Updated: 2021/01/25 00:42:18 by nle-biha         ###   ########.fr       */
+/*   Updated: 2021/01/25 00:47:28 by nle-biha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ void	ft_bzero(void *s, size_t n)
 
 int		exit_gnl(char **line)
 {
-	free(*line);
+	if (*line)
+		free(*line);
 	*line = NULL;
 	return (-1);
 }
@@ -49,7 +50,7 @@ int		fill_next_line(char *source, char **line, char *save)
 	if (!(temp = ft_substr(source, 0, pos_new_line(source))))
 		return (exit_gnl(line));
 	if (!(*line = ft_strjoin(*line, temp)))
-		return (-1);
+		return (exit_gnl(line));
 	if (!(temp = ft_substr(source, pos_new_line(source) + 1, BUFFER_SIZE)))
 		return (exit_gnl(line));
 	ft_strlcpy(save, temp, BUFFER_SIZE);

@@ -6,7 +6,7 @@
 /*   By: nle-biha <nle-biha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 22:58:32 by nle-biha          #+#    #+#             */
-/*   Updated: 2021/01/24 23:42:14 by nle-biha         ###   ########.fr       */
+/*   Updated: 2021/01/25 00:28:56 by nle-biha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ int		get_next_line(int fd, char **line)
 	ft_strlcpy(*line, save[fd], BUFFER_SIZE);
 	while ((err = read(fd, buf, BUFFER_SIZE)) > 0)
 	{
-		fill_next_line(buf, line, save[fd]);
+		if (fill_next_line(buf, line, save[fd]) == -1)
+			return (-1);
 		if (pos_new_line(buf) < ft_strlen(buf))
 			return (1);
 		ft_bzero(buf, BUFFER_SIZE + 1);

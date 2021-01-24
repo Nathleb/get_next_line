@@ -6,7 +6,7 @@
 /*   By: nle-biha <nle-biha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 22:58:32 by nle-biha          #+#    #+#             */
-/*   Updated: 2021/01/24 23:25:10 by nle-biha         ###   ########.fr       */
+/*   Updated: 2021/01/24 23:29:53 by nle-biha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int		fill_next_line(char *source, char **line, char *save)
 	if (!(temp = ft_substr(source, pos_new_line(source) + 1, BUFFER_SIZE)))
 	{
 		free(*line);
-		return(-1);
+		return (-1);
 	}
 	ft_strlcpy(save, temp, BUFFER_SIZE);
 	free(temp);

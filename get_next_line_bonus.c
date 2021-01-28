@@ -6,7 +6,7 @@
 /*   By: nle-biha <nle-biha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 22:58:32 by nle-biha          #+#    #+#             */
-/*   Updated: 2021/01/28 22:39:01 by nle-biha         ###   ########.fr       */
+/*   Updated: 2021/01/28 22:48:07 by nle-biha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int		get_next_line(int fd, char **line)
 			return (1);
 		ft_bzero(buf, BUFFER_SIZE + 1);
 	}
-	ft_bzero(save, BUFFER_SIZE + 1);
+	ft_bzero(save[fd], BUFFER_SIZE + 1);
 	if (err == 0)
 		return (0);
 	return (exit_gnl(line));
